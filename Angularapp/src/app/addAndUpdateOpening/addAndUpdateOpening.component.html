@@ -1,0 +1,201 @@
+<div class="container">
+  <mat-toolbar class="tool">
+    <span>{{
+      openingForm.controls["_id"].value ? "Modify Opening" : "Add new Opening"
+    }}</span>
+    <span class="fill-remaining-space"></span>
+    <button
+      class="btn-dialog-close"
+      mat-stroked-button
+      (click)="onClose()"
+      tabIndex="-1"
+    >
+      <mat-icon>clear</mat-icon>
+    </button>
+  </mat-toolbar>
+</div>
+
+<br />
+
+<form [formGroup]="openingForm" (submit)="addOpening()">
+  <input type="hidden" formControlName="_id" [(ngModel)]="_id" />
+  <mat-grid-list cols="1" rowHeight="100px" [gutterSize]="'5px'">
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field class="example-full-width">
+          <mat-label style="color: black; font-size: large"
+            ><b>Job Title:</b></mat-label
+          >
+          <input
+            matInput
+            #message
+            maxlength="50"
+            [(ngModel)]="jobtitle"
+            placeholder="Job Title"
+            formControlName="title"
+            required
+          />
+          <mat-error *ngIf="openingForm.controls['title'].errors?.required"
+            >Job title is Mandatory</mat-error
+          >
+          <mat-error *ngIf="openingForm.controls['title'].errors?.pattern"
+            >Only Alpha Numericals are allowed</mat-error
+          >
+          <mat-hint align="start"><strong>Job Title</strong> </mat-hint>
+          <mat-hint align="end">{{ message.value.length }} / 50</mat-hint>
+        </mat-form-field>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <mat-form-field>
+          <mat-label style="color: black; font-size: large"
+            ><b>Location:</b></mat-label
+          >
+          <mat-select
+            [(ngModel)]="location"
+            placeholder="Location"
+            formControlName="loc"
+            required
+          >
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let Location of Locations">
+              <mat-option value="{{ Location.id }}">{{
+                Location.value
+              }}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error>Location is Mandatory</mat-error>
+          <mat-hint align="start"><strong>Location</strong> </mat-hint>
+        </mat-form-field>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp;
+        <mat-form-field>
+          <mat-label style="color: black; font-size: large"
+            ><b>Employement type:</b></mat-label
+          >
+          <mat-select
+            [(ngModel)]="EmployementType"
+            placeholder="Employement type"
+            formControlName="Etype"
+            required
+          >
+            <mat-option>None</mat-option>
+            <ng-container *ngFor="let type of EmpTypes">
+              <mat-option value="{{ type.id }}">{{ type.value }}</mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error>Employement Type is Mandatory</mat-error>
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+    <mat-grid-tile>
+      <div class="controles-container">
+        <mat-form-field>
+          <mat-label style="color: black; font-size: large"
+            ><b>Eligibility:</b></mat-label
+          >
+          <input
+            matInput
+            [(ngModel)]="Eligibility"
+            placeholder="Eligibility"
+            formControlName="eligibility"
+            required
+          />
+          <mat-hint align="start"><strong>Eligibility</strong> </mat-hint>
+
+          <mat-error
+            *ngIf="openingForm.controls['eligibility'].errors?.required"
+            >This field is Mandatory</mat-error
+          >
+          <mat-error *ngIf="openingForm.controls['eligibility'].errors?.pattern"
+            >Only Alpha Numericals are allowed</mat-error
+          >
+        </mat-form-field>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        <mat-form-field>
+          <mat-label style="color: black; font-size: large"
+            ><b>Work will include:</b></mat-label
+          >
+          <input matInput [(ngModel)]="Work" formControlName="work" />
+          <mat-hint align="start"><strong>Work will include</strong> </mat-hint>
+          <mat-error *ngIf="openingForm.controls['work'].errors?.pattern"
+            >Only Alpha Numericals are allowed</mat-error
+          >
+        </mat-form-field>
+        &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+        &nbsp; &nbsp;
+        <mat-form-field>
+          <mat-label style="color: black; font-size: large"
+            ><b>Note:</b></mat-label
+          >
+          <input
+            matInput
+            [(ngModel)]="Note"
+            placeholder="Note"
+            formControlName="note"
+          />
+          <mat-hint align="start"><strong>Note</strong> </mat-hint>
+          <mat-error *ngIf="openingForm.controls['note'].errors?.pattern"
+            >Only Alpha Numericals are allowed</mat-error
+          >
+        </mat-form-field>
+      </div>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <mat-form-field class="skills">
+        <mat-label style="color: black; font-size: large"
+          ><b>Skills:</b></mat-label
+        >
+        <mat-chip-list #chipList aria-label="Skill selection">
+          <mat-chip
+            *ngFor="let skill of selectedSkills"
+            [selectable]="selectable"
+            [removable]="removable"
+            (removed)="remove(skill)"
+          >
+            {{ skill }}
+            <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+          </mat-chip>
+          <input
+            #skillInput
+            [(ngModel)]="skills"
+            formControlName="skills"
+            [formControl]="skillCtrl"
+            [matAutocomplete]="auto"
+            [matChipInputFor]="chipList"
+            [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            (matChipInputTokenEnd)="add($event)"
+          />
+        </mat-chip-list>
+        <mat-autocomplete
+          #auto="matAutocomplete"
+          (optionSelected)="selected($event)"
+        >
+          <mat-option
+            *ngFor="let skill of filteredSkills | async"
+            [value]="skill"
+          >
+            {{ skill }}
+          </mat-option>
+        </mat-autocomplete>
+        <mat-hint align="start"><strong>Skills</strong> </mat-hint>
+      </mat-form-field>
+    </mat-grid-tile>
+
+    <mat-grid-tile>
+      <div class="button-row">
+        <button
+          class="btn1"
+          mat-raised-button
+          type="submit"
+          [disabled]="openingForm.invalid"
+        >
+          Save
+        </button>
+        &nbsp; &nbsp; &nbsp;&nbsp;
+        <button class="btn2" mat-raised-button (click)="onReset()">
+          Reset
+        </button>
+      </div>
+    </mat-grid-tile>
+  </mat-grid-list>
+</form>

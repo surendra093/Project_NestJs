@@ -1,0 +1,206 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-icon.menu {
+  height: 30px !important;
+  width: 40px !important;
+  font-size: 40px !important;
+}
+
+div.row {
+  margin-left: 10px;
+}
+
+.span.form-group {
+  margin-left: 10px;
+  margin-right: 700px;
+}
+.form-control {
+  border-radius: 20px;
+  border-width: 2.2px;
+  border-color: black;
+}
+
+input[type="text"] {
+  margin-left: 25px;
+  width: 45%;
+  background-image: url("search.png");
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.cont {
+  display: block;
+  position: relative;
+  margin-left: 700px;
+  margin-top: -30px;
+  margin-right: 465px;
+  cursor: pointer;
+}
+
+input[type="checkbox"] {
+  position: relative;
+  cursor: pointer;
+  margin-right: 5px;
+  margin-left: -220px;
+  width: 16px;
+  height: 16px;
+  top: 2px;
+  visibility: hidden;
+}
+
+.checkmark {
+  position: absolute;
+  top: 4.5px;
+  left: -30px;
+  height: 16px;
+  width: 16px;
+  background-color: grey;
+  border-radius: 5px;
+}
+
+.cont:hover input ~ .checkmark {
+  background-color: yellow;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+.cont input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.cont .checkmark:after {
+  left: 6px;
+  top: 3.5px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+.span.checkBox {
+  margin-top: -50px;
+}
+
+.cont input:checked ~ .checkmark {
+  background-color: #ffd800;
+}
+
+.btn {
+  margin-top: -60px;
+  margin-left: 1170px;
+  background-color: #ffd800;
+  border-color: black;
+  border-radius: 10px;
+  box-shadow: 0 0 0 1px black inset, 0 0 0 2px rgba(255, 255, 255, 0.15) inset,
+    0 0 0 0 black, 0 0 0 1px rgba(0, 0, 0, 0.4),
+    0 0px 8px 1px rgba(0, 0, 0, 0.5);
+}
+
+.btn:hover {
+  box-shadow: 0 8px 20px 0 rgba(0, 0, 0, 0.2), 0 8px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: #212221;
+  color: white;
+}
+.deactivate {
+  background-color: #eeeeee;
+  border-color: rgb(144, 138, 138);
+  border-radius: 10px;
+}
+
+.activate {
+  background-color: #eeeeee;
+  border-color: rgb(144, 138, 138);
+  border-radius: 10px;
+}
+
+.action-btn1 {
+  color: rgb(39, 160, 39);
+  cursor: pointer;
+}
+
+.action-btn2 {
+  color: #f4511e;
+  cursor: pointer;
+}
+
+table {
+  position: relative;
+  z-index: 2;
+  left: 2%;
+  margin-top: 5px;
+  width: 95%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  border-radius: 12px 12px 3px 3px;
+  overflow: hidden;
+  text-align: center;
+  table-layout: fixed;
+}
+
+th,
+td {
+  padding: 10px 15px;
+  border: 0.5px solid;
+  vertical-align: middle;
+}
+
+th {
+  background: grey;
+  color: black;
+}
+
+tr:nth-child(odd) {
+  background-color: #eeeeee;
+}
+
+.data {
+  position: absolute;
+  right: 0;
+  z-index: 1;
+  opacity: 0.9;
+}
+
+.mat-icon.arrow {
+  display: inline-flex;
+  vertical-align: auto;
+  height: 20px !important;
+  width: 20px !important;
+  font-size: 30px !important;
+  color: grey;
+  cursor: pointer;
+}
+
+.paginator /deep/ .ngx-pagination .current {
+  background: #ffd800;
+  color: black;
+  border-radius: 5px;
+}
+
+.paginator /deep/ .ngx-pagination {
+  text-align: center;
+}
+
+.paginator /deep/ .ngx-pagination a:hover,
+.ngx-pagination button:hover {
+  background: #d4d4d4;
+  border-radius: 5px;
+  padding-left: 9px;
+  padding-right: 9px;
+  text-decoration: none;
+}
+
+.paginator /deep/ .ngx-pagination a:focus,
+.ngx-pagination button:focus {
+  outline: none;
+  background: #d4d4d4;
+}

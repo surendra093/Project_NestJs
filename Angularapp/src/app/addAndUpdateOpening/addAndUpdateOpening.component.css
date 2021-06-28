@@ -1,0 +1,59 @@
+.example-spacer {
+  flex: 1 1 auto;
+}
+
+.mat-toolbar.tool {
+  width: 1000px;
+  margin-top: 10px;
+  height: 50px;
+}
+
+.normal-form {
+  margin-top: 0px;
+}
+
+.controles-container {
+  width: 100%;
+  padding: 5%;  
+}
+
+.controles-container > * {
+  width: 25%;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  pointer-events: all !important;
+}
+
+.btn1 {
+  width: 200px;
+  height: 40px;
+  border-radius: 15px;
+  background-color: #ffd800;
+  border: 0.5px solid black;
+}
+
+.btn1:hover {
+  background-color: #212221;
+  color: white;
+}
+
+.btn2 {
+  margin-bottom: 35px;
+  width: 200px;
+  height: 40px;
+  border-radius: 10px;
+  background-color: #ffd800;
+  border: 0.5px solid black;
+}
+
+.btn2:hover {
+  background-color: #212221;
+  color: white;
+}
+
+.skills {
+  right: 15px;
+  width: 88%;
+}

@@ -1,0 +1,131 @@
+<div class="container">
+  <mat-toolbar class="tool1" color="primary">
+    <span
+      ><a href="https://www.veenaworld.com/"
+        ><img
+          src="assets/images/logo.png"
+          alt="logo"
+          width="75"
+          height="50" /></a
+    ></span>
+
+    <button
+      mat-icon-button
+      class="example-icon"
+      aria-label="Example icon-button with menu icon"
+    >
+      <mat-icon class="menu" aria-hidden="false" aria-label="Example home icon"
+        >menu</mat-icon
+      >
+    </button>
+
+    &nbsp; &nbsp;
+    <span><b>JOB OPENINGS</b></span>
+    <span class="example-spacer"></span>
+  </mat-toolbar>
+</div>
+
+<br />
+
+<div class="container">
+  <mat-toolbar class="tool2">
+    <span><b>HR</b></span>
+    <mat-icon class="arrow1">chevron_right</mat-icon>
+    <span><b>Careers</b></span>
+    <mat-icon class="arrow1">chevron_right</mat-icon>
+    <span><b>Job Openings</b></span>
+  </mat-toolbar>
+</div>
+
+<br />
+
+<div class="col md-8">
+  <span class="form-group">
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="searchValue"
+      id="search"
+      placeholder="Job title/Location"
+    />
+  </span>
+  <label class="cont"
+    ><b>Show Activated Openings</b>
+    <input type="checkbox" class="status" (change)="onChange($event)" />
+    <span class="checkmark"></span>
+  </label>
+  <button class="btn" (click)="addOpeningPopUp()">Add new openings</button>
+</div>
+
+<br />
+
+<div *ngIf="openings.length == 0; else elseBlock">
+  <h3 style="margin-left: 420px"><i>****No Current Job openings****</i></h3>
+</div>
+
+<br />
+
+<ng-template #elseBlock>
+  <div class="data">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Job title</th>
+          <th>Location</th>
+          <th>Status</th>
+          <th>No of Applications</th>
+          <th>Opening date</th>
+          <th></th>
+        </tr>
+        <tr
+          *ngFor="
+            let opening of openings
+              | searchfilter: searchValue
+              | paginate: { itemsPerPage: 5, currentPage: p }
+          "
+        >
+          <td>{{ opening.jobtitle }}</td>
+          <td>{{ opening.location }}</td>
+          <td>
+            <div *ngIf="opening.status == true; else deactivate">Activated</div>
+            <ng-template #deactivate> Deactivated </ng-template>
+          </td>
+          <td>
+            <span>0</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <mat-icon class="arrow">chevron_right</mat-icon>
+          </td>
+          <td>{{ opening.Date | date: "longDate" }}</td>
+          <td>
+            <a class="action-btn1" (click)="onUpdate(opening)">
+              <i class="material-icons">edit</i>
+            </a>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a class="action-btn2" (click)="deleteOpening(opening._id)">
+              <i class="material-icons">delete</i>
+            </a>
+            &nbsp;&nbsp;
+            <span *ngIf="opening.status == true; else activate">
+              <button class="deactivate" (click)="onDeactivate(opening)">
+                Deactivate
+              </button>
+            </span>
+            <ng-template #activate>
+              <button class="activate" (click)="onActivate(opening)">
+                Activate
+              </button>
+            </ng-template>
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <pagination-controls
+      class="paginator"
+      [maxSize]="maxSize"
+      (pageChange)="p = $event"
+    ></pagination-controls>
+  </div>
+</ng-template>
+
