@@ -115,22 +115,34 @@ input[type="checkbox"] {
   background-color: #eeeeee;
   border-color: rgb(144, 138, 138);
   border-radius: 10px;
+  position: absolute;
+  right: 20px;
 }
 
 .activate {
   background-color: #eeeeee;
   border-color: rgb(144, 138, 138);
   border-radius: 10px;
+  position: absolute;
+  right: 26px;
 }
 
 .action-btn1 {
   color: rgb(39, 160, 39);
   cursor: pointer;
+  position: absolute;
+  right: 180px;
 }
 
 .action-btn2 {
   color: #f4511e;
   cursor: pointer;
+  position: absolute;
+  right: 135px;
+}
+
+.actions {
+  margin-right: 100px;
 }
 
 table {
@@ -164,7 +176,7 @@ tr:nth-child(odd) {
 }
 
 .data {
-  position: absolute;
+  /*position: absolute;*/
   right: 0;
   z-index: 1;
   opacity: 0.9;

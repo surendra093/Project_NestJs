@@ -24,7 +24,6 @@ export class addAndUpdateOpeningComponent implements OnInit {
   
   validPattern = /^[a-zA-Z0-9_!@#$%^&*()-/| ]*$/;
   
-  
   openingForm = new FormGroup({
     _id  : new FormControl(''),
     title: new FormControl('', [Validators.required,Validators.pattern(this.validPattern)]),
@@ -36,9 +35,6 @@ export class addAndUpdateOpeningComponent implements OnInit {
     skills: new FormControl([]),
     status: new FormControl()
   });
-
- 
-
 
   visible = true;
   selectable = true;
@@ -74,7 +70,7 @@ export class addAndUpdateOpeningComponent implements OnInit {
             }
         }
         for(let j=0;j < this.EmpTypes.length;j++){
-          if(this.Locations[j].value == this.data.location){
+          if(this.EmpTypes[j].value == this.data.EmployementType){
                 this.EmployementType  = (this.EmpTypes[j].id).toString();
                 break; 
           }
@@ -97,21 +93,7 @@ export class addAndUpdateOpeningComponent implements OnInit {
     {id: 2, value: 'Part Time'},
     {id: 3, value: 'Trainee'}
   ];
- 
-  
-  initializeFormGroup() {
-    this.openingForm.patchValue({
-      title: '',
-      loc : 0,
-      EType: 0,
-      eligibility: '',
-      work: '',
-      note: '',
-      skills: ['']
-    });
-  }
-
-     
+   
   onClose() {
     this.dialogRef.close();
   }

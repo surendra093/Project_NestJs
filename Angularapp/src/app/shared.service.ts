@@ -13,7 +13,6 @@ export class SharedService {
   
   public _refreshNeeded$ : BehaviorSubject<any> = new BehaviorSubject(null);
 
-  
   get refreshNeeded$(){
        return this._refreshNeeded$;
   }
@@ -43,7 +42,6 @@ export class SharedService {
             
   }
  
-  
   updateOpening(editOpening:any){
 
          var headers = new HttpHeaders();
@@ -51,47 +49,5 @@ export class SharedService {
          return this.http.patch('http://localhost:3000/openings/'+editOpening._id,editOpening,{headers:headers})
 
   }
-  
-  /*
-  validPattern = /^[a-zA-Z0-9_!@#$%^&*()-/| ]*$/;
-  
-  form: FormGroup = new FormGroup({
-    _id  : new FormControl(''),
-    title: new FormControl('', [Validators.required,Validators.pattern(this.validPattern)]),
-    loc : new FormControl(0, [Validators.required]),
-    Etype: new FormControl(0,[Validators.required]),
-    eligibility: new FormControl('', [Validators.required,Validators.pattern(this.validPattern)]),
-    work: new FormControl('',[Validators.pattern(this.validPattern)]),
-    note: new FormControl('',[Validators.pattern(this.validPattern)]),
-    skills: new FormControl([])
-  });
-
-  initializeFormGroup() {
-    this.form.patchValue({
-      _id : '',
-      title: '',
-      loc : 0,
-      EType: 0,
-      eligibility: '',
-      work: '',
-      note: '',
-      skills: ['']
-    });
-  }
-   
-  fillForm(opening:any){
-    
-    console.log(opening);
-    this.form.patchValue({
-       _id   : opening._id,
-       title : opening.jobtitle,
-       loc : opening.location,
-       EType: opening.EmployementType,
-       eligibility: opening.Eligibility,
-       work: opening.Work,
-       note: opening.Note,
-       skills: opening.skills
-    })
-  } */
 
 }

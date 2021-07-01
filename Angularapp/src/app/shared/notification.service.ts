@@ -10,20 +10,21 @@ export class NotificationService {
 
   config: MatSnackBarConfig = {
 
-        duration : 2500,
+        duration : 3000,
         horizontalPosition: 'center',
         verticalPosition: 'top',
 
   }
 
 
-   success(msg:any){
+  success(msg:any){
        this.config['panelClass'] = ['notification','success'];
        this.snackBar.open(msg,'',this.config);
    }
 
-   warn(msg:any){
+  warn(msg:any){
     this.config['panelClass'] = ['notification','warn'];
     this.snackBar.open(msg,'',this.config);
-}
+  }
+  
 }

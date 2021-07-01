@@ -14,7 +14,8 @@ div.container {
 }
 .mat-toolbar.tool2 {
   height: 40px;
-  width: 1320px;
+  /*width: 1320px;*/
+  width: 96vw;
   margin-top: -20px;
   border-radius: 10px;
   border-color: black;

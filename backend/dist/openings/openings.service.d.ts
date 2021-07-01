@@ -4,7 +4,7 @@ export declare class OpeningsService {
     private readonly openingModel;
     private openings;
     constructor(openingModel: Model<Opening>);
-    insertOpening(jobtitle: string, location: string, EmployementType: string, Eligibility: string, Work: string, Note: string, skills: Array<string>, Date: Date, status: Boolean): Promise<string>;
+    insertOpening(body: any): Promise<string>;
     getOpenings(): Promise<Opening[]>;
     getSingleOpening(openingId: string): Promise<{
         id: string;
@@ -18,7 +18,7 @@ export declare class OpeningsService {
         Date: Date;
         status: Boolean;
     }>;
-    updateOpening(openingId: string, jobtitle: string, location: string, EmployementType: string, Eligibility: string, Work: string, Note: string, skills: Array<string>, Date: Date, status: Boolean): Promise<void>;
+    updateOpening(openingId: string, body: any): Promise<void>;
     deleteOpening(openId: string): Promise<void>;
     private findOpening;
 }

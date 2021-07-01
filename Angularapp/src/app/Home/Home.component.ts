@@ -1,5 +1,5 @@
 import { Component, OnInit} from '@angular/core';
-import {MatDialog,MatDialogConfig,MatDialogRef,MAT_DIALOG_DATA} from '@angular/material/dialog';
+import {MatDialog,MatDialogConfig} from '@angular/material/dialog';
 import {SharedService} from '../shared.service';
 import { addAndUpdateOpeningComponent } from '../addAndUpdateOpening/addAndUpdateOpening.component';
 import {Opening} from '../shared/opening.model';
@@ -65,13 +65,6 @@ export class HomeComponent implements OnInit {
           if(res){
                const statusChange ={
                   _id             : opening._id,
-                  jobtitle        : opening.jobtitle,
-                  location        : opening.location,
-                  EmployementType : opening.EmployementType, 
-                  Eligibility     : opening.Eligibility,
-                  Work            : opening.Work,
-                  Note            : opening.Note,
-                  skills          : opening.skills,
                   status          : false
                 }
 
@@ -97,15 +90,9 @@ export class HomeComponent implements OnInit {
     this.dialogService.openConfirmDialog('Are you sure to Activate this opening?')
     .afterClosed().subscribe(res=>{
         if(res){
-             const statusChange ={
+              const statusChange = {
                 _id             : opening._id,
-                jobtitle        : opening.jobtitle,
-                location        : opening.location,
-                EmployementType : opening.EmployementType, 
-                Eligibility     : opening.Eligibility,
-                Work            : opening.Work,
-                Note            : opening.Note,
-                skills          : opening.skills,
+                Date            : Date.now(),
                 status          : true
               }
 

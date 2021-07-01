@@ -21,11 +21,28 @@ let OpeningsService = class OpeningsService {
         this.openingModel = openingModel;
         this.openings = [];
     }
-    async insertOpening(jobtitle, location, EmployementType, Eligibility, Work, Note, skills, Date, status) {
-        const newOpening = new this.openingModel({ jobtitle, location, EmployementType,
-            Eligibility, Work, Note, skills, Date, status });
-        const result = await newOpening.save();
-        return result.id;
+    async insertOpening(body) {
+        try {
+            const jobtitle = body.jobtitle;
+            const location = body.location;
+            const EmployementType = body.EmployementType;
+            const Eligibility = body.Eligibility;
+            const Work = body.Work;
+            const Note = body.Note;
+            const skills = body.skills;
+            const Date = body.Date;
+            const status = body.status;
+            const newOpening = new this.openingModel({ jobtitle, location, EmployementType,
+                Eligibility, Work, Note, skills, Date, status });
+            const result = await newOpening.save();
+            return result.id;
+        }
+        catch (error) {
+            throw new common_1.HttpException({
+                status: common_1.HttpStatus.BAD_REQUEST,
+                error: error,
+            }, common_1.HttpStatus.BAD_REQUEST);
+        }
     }
     async getOpenings() {
         var mysort = { Date: -1 };
@@ -47,41 +64,41 @@ let OpeningsService = class OpeningsService {
             status: opening.status
         };
     }
-    async updateOpening(openingId, jobtitle, location, EmployementType, Eligibility, Work, Note, skills, Date, status) {
+    async updateOpening(openingId, body) {
         const updatedOpening = await this.findOpening(openingId);
-        if (jobtitle) {
-            updatedOpening.jobtitle = jobtitle;
+        if (body.jobtitle) {
+            updatedOpening.jobtitle = body.jobtitle;
         }
-        if (location) {
-            updatedOpening.location = location;
+        if (body.location) {
+            updatedOpening.location = body.location;
         }
-        if (EmployementType) {
-            updatedOpening.EmployementType = EmployementType;
+        if (body.EmployementType) {
+            updatedOpening.EmployementType = body.EmployementType;
         }
-        if (Eligibility) {
-            updatedOpening.Eligibility = Eligibility;
+        if (body.Eligibility) {
+            updatedOpening.Eligibility = body.Eligibility;
         }
-        if (Work) {
-            updatedOpening.Work = Work;
+        if (body.Work) {
+            updatedOpening.Work = body.Work;
         }
-        if (Note) {
-            updatedOpening.Note = Note;
+        if (body.Note) {
+            updatedOpening.Note = body.Note;
         }
-        if (skills) {
-            updatedOpening.skills = skills;
+        if (body.skills) {
+            updatedOpening.skills = body.skills;
         }
-        if (Date) {
-            updatedOpening.Date = Date;
+        if (body.Date) {
+            updatedOpening.Date = body.Date;
         }
-        if (status == false || true) {
-            updatedOpening.status = status;
+        if (body.status == false || true) {
+            updatedOpening.status = body.status;
         }
         updatedOpening.save();
     }
     async deleteOpening(openId) {
         const result = await this.openingModel.deleteOne({ _id: openId }).exec();
         if (result.n === 0) {
-            throw new common_1.NotFoundException('Could not find product.');
+            throw new common_1.NotFoundException('Could not find opening.');
         }
     }
     async findOpening(id) {
@@ -90,10 +107,10 @@ let OpeningsService = class OpeningsService {
             opening = await this.openingModel.findById(id).exec();
         }
         catch (error) {
-            throw new common_1.NotFoundException('Could not find product.');
+            throw new common_1.NotFoundException('Could not find opening.');
         }
         if (!opening) {
-            throw new common_1.NotFoundException('Could not find product.');
+            throw new common_1.NotFoundException('Could not find opening.');
         }
         return opening;
     }

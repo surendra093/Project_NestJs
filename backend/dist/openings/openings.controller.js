@@ -14,13 +14,14 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.OpeningsController = void 0;
 const common_1 = require("@nestjs/common");
+const swagger_1 = require("@nestjs/swagger");
 const openings_service_1 = require("./openings.service");
 let OpeningsController = class OpeningsController {
     constructor(openingsService) {
         this.openingsService = openingsService;
     }
-    async addOpening(openTitle, openLoc, openType, openEligibility, openWork, openNote, openSkills, openDate, openStatus) {
-        const generatedId = await this.openingsService.insertOpening(openTitle, openLoc, openType, openEligibility, openWork, openNote, openSkills, openDate, openStatus);
+    async addOpening(body) {
+        const generatedId = await this.openingsService.insertOpening(body);
         return { id: generatedId };
     }
     async getAllOpenings() {
@@ -30,8 +31,8 @@ let OpeningsController = class OpeningsController {
     getOpening(openId) {
         return this.openingsService.getSingleOpening(openId);
     }
-    async updateOpening(openId, openTitle, openLoc, openType, openEligibility, openWork, openNote, openSkills, openDate, openStatus) {
-        await this.openingsService.updateOpening(openId, openTitle, openLoc, openType, openEligibility, openWork, openNote, openSkills, openDate, openStatus);
+    async updateOpening(openId, body) {
+        await this.openingsService.updateOpening(openId, body);
         return null;
     }
     async deleteOpening(openId) {
@@ -41,19 +42,10 @@ let OpeningsController = class OpeningsController {
 };
 __decorate([
     common_1.Post(),
-    __param(0, common_1.Body('jobtitle')),
-    __param(1, common_1.Body('location')),
-    __param(2, common_1.Body('EmployementType')),
-    __param(3, common_1.Body('Eligibility')),
-    __param(4, common_1.Body('Work')),
-    __param(5, common_1.Body('Note')),
-    __param(6, common_1.Body('skills')),
-    __param(7, common_1.Body('Date')),
-    __param(8, common_1.Body('status')),
+    swagger_1.ApiOperation({ summary: 'Get my openings' }),
+    __param(0, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String, String, Array,
-        Date,
-        Boolean]),
+    __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], OpeningsController.prototype, "addOpening", null);
 __decorate([
@@ -71,20 +63,9 @@ __decorate([
 ], OpeningsController.prototype, "getOpening", null);
 __decorate([
     common_1.Patch(':id'),
-    __param(0, common_1.Param('id')),
-    __param(1, common_1.Body('jobtitle')),
-    __param(2, common_1.Body('location')),
-    __param(3, common_1.Body('EmployementType')),
-    __param(4, common_1.Body('Eligibility')),
-    __param(5, common_1.Body('Work')),
-    __param(6, common_1.Body('Note')),
-    __param(7, common_1.Body('skills')),
-    __param(8, common_1.Body('Date')),
-    __param(9, common_1.Body('status')),
+    __param(0, common_1.Param('id')), __param(1, common_1.Body()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String, String, String, String, String, Array,
-        Date,
-        Boolean]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
 ], OpeningsController.prototype, "updateOpening", null);
 __decorate([

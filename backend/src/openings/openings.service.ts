@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, HttpException,HttpStatus} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import {Model} from 'mongoose';
 
@@ -10,23 +10,35 @@ export class OpeningsService {
   private openings: Opening[] = [];
 
   constructor(@InjectModel('Opening') private readonly openingModel:Model<Opening>){ }
+    
+    async insertOpening(body){
 
-    async insertOpening(
-        jobtitle        : string,
-        location        : string,
-        EmployementType : string,
-        Eligibility     : string,
-        Work            : string,
-        Note            : string,
-        skills          : Array<string>,
-        Date            : Date,
-        status            : Boolean) {
-        const newOpening = new this.openingModel({jobtitle,location,EmployementType,
-            Eligibility,Work,Note,skills,Date,status});
+        try{
+            const jobtitle = body.jobtitle;
+            const location = body.location;
+            const EmployementType = body.EmployementType;
+            const Eligibility = body.Eligibility;
+            const Work = body.Work;
+            const Note = body.Note;
+            const skills = body.skills;
+            const Date = body.Date;
+            const status = body.status;
 
-        const result = await newOpening.save();
-        //console.log(result);
-        return result.id as string;
+            const newOpening = new this.openingModel({jobtitle,location,EmployementType,
+                Eligibility,Work,Note,skills,Date,status});
+
+            const result = await newOpening.save();
+            return result.id as string;
+
+        } catch (error) {
+            throw new HttpException(
+            {
+                status: HttpStatus.BAD_REQUEST,
+                error: error,
+            },
+            HttpStatus.BAD_REQUEST,
+            );
+        }
     }
 
     async getOpenings() {
@@ -50,47 +62,37 @@ export class OpeningsService {
             status  : opening.status
         };
     }
+    
+    async updateOpening(openingId : string,body){
 
-    async updateOpening(
-        openingId       : string,
-        jobtitle        : string,
-        location        : string,
-        EmployementType : string,
-        Eligibility     : string,
-        Work            : string,
-        Note            : string,
-        skills          : Array<string>,
-        Date            : Date,
-        status          : Boolean
-    ){
         const updatedOpening = await this.findOpening(openingId);
-        if (jobtitle) {
-            updatedOpening.jobtitle = jobtitle;
+        if (body.jobtitle) {
+            updatedOpening.jobtitle = body.jobtitle;
         }
-        if (location) {
-            updatedOpening.location = location;
+        if (body.location) {
+            updatedOpening.location = body.location;
         }
-        if (EmployementType) {
-            updatedOpening.EmployementType = EmployementType;
+        if (body.EmployementType) {
+            updatedOpening.EmployementType = body.EmployementType;
         }
-        if (Eligibility) {
-            updatedOpening.Eligibility = Eligibility;
+        if (body.Eligibility) {
+            updatedOpening.Eligibility = body.Eligibility;
         }
-        if (Work) {
-            updatedOpening.Work = Work;
+        if (body.Work) {
+            updatedOpening.Work = body.Work;
         }
-        if (Note) {
-            updatedOpening.Note = Note;
+        if (body.Note) {
+            updatedOpening.Note = body.Note;
         }
-        if (skills) {
-            updatedOpening.skills = skills;
+        if (body.skills) {
+            updatedOpening.skills = body.skills;
         }
-        if (Date) {
-            updatedOpening.Date = Date;
+        if (body.Date) {
+            updatedOpening.Date = body.Date;
         }
         
-        if (status == false || true) {
-            updatedOpening.status = status;
+        if (body.status == false || true) {
+            updatedOpening.status = body.status;
         }
        
         updatedOpening.save();
@@ -99,7 +101,7 @@ export class OpeningsService {
     async deleteOpening(openId: string) {
         const result = await this.openingModel.deleteOne({_id: openId}).exec();
         if (result.n === 0) {
-        throw new NotFoundException('Could not find product.');
+        throw new NotFoundException('Could not find opening.');
         }
     }
 
@@ -108,10 +110,10 @@ export class OpeningsService {
         try {
         opening = await this.openingModel.findById(id).exec();
         } catch (error) {
-        throw new NotFoundException('Could not find product.');
+        throw new NotFoundException('Could not find opening.');
         }
         if (!opening) {
-        throw new NotFoundException('Could not find product.');
+        throw new NotFoundException('Could not find opening.');
         }
         return opening;
     }

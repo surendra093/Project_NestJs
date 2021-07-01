@@ -5,10 +5,10 @@ import {
     Get,
     Param,
     Patch,
-    Delete,
-    Req,
+    Delete
   } from '@nestjs/common';
   
+import { ApiOperation } from '@nestjs/swagger';
 import { OpeningsService } from './openings.service';
 
   
@@ -17,30 +17,11 @@ import { OpeningsService } from './openings.service';
     constructor(private readonly openingsService: OpeningsService) {}
   
     @Post()
-    async  addOpening(
-      @Body('jobtitle') openTitle: string,
-      @Body('location') openLoc: string,
-      @Body('EmployementType') openType: string,
-      @Body('Eligibility') openEligibility: string,
-      @Body('Work') openWork: string,
-      @Body('Note') openNote: string,
-      @Body('skills') openSkills: Array<string>,
-      @Body('Date') openDate : Date,
-      @Body('status') openStatus : Boolean
+    @ApiOperation({summary:'Get my openings'})
+    async addOpening(@Body() body){
+          const generatedId = await this.openingsService.insertOpening(body);
 
-    ) {
-      const generatedId =await this.openingsService.insertOpening(
-            openTitle,
-            openLoc,
-            openType,
-            openEligibility,
-            openWork,
-            openNote,
-            openSkills,
-            openDate,
-            openStatus
-      );
-      return { id: generatedId };
+          return {id: generatedId};
     }
   
     @Get()
@@ -55,21 +36,9 @@ import { OpeningsService } from './openings.service';
     }
   
     @Patch(':id')
-    async updateOpening(
-        @Param('id') openId: string,
-        @Body('jobtitle') openTitle: string,
-        @Body('location') openLoc: string,
-        @Body('EmployementType') openType: string,
-        @Body('Eligibility') openEligibility: string,
-        @Body('Work') openWork: string,
-        @Body('Note') openNote: string,
-        @Body('skills') openSkills: Array<string>,
-        @Body('Date') openDate : Date,
-        @Body('status') openStatus : Boolean
-
-    ) {
-      await this.openingsService.updateOpening(openId,openTitle,openLoc,openType,openEligibility,openWork,openNote,openSkills,openDate,openStatus);
-      return null;
+    async updateOpening(@Param('id') openId: string,@Body() body){
+        await this.openingsService.updateOpening(openId,body);
+        return null;
     }
   
     @Delete(':id')

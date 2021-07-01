@@ -2,7 +2,7 @@ import { OpeningsService } from './openings.service';
 export declare class OpeningsController {
     private readonly openingsService;
     constructor(openingsService: OpeningsService);
-    addOpening(openTitle: string, openLoc: string, openType: string, openEligibility: string, openWork: string, openNote: string, openSkills: Array<string>, openDate: Date, openStatus: Boolean): Promise<{
+    addOpening(body: any): Promise<{
         id: string;
     }>;
     getAllOpenings(): Promise<import("./opening.model").Opening[]>;
@@ -18,6 +18,6 @@ export declare class OpeningsController {
         Date: Date;
         status: Boolean;
     }>;
-    updateOpening(openId: string, openTitle: string, openLoc: string, openType: string, openEligibility: string, openWork: string, openNote: string, openSkills: Array<string>, openDate: Date, openStatus: Boolean): Promise<any>;
+    updateOpening(openId: string, body: any): Promise<any>;
     deleteOpening(openId: string): Promise<any>;
 }
